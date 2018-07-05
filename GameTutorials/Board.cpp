@@ -4,23 +4,49 @@
 
 // Arrays of chars for printing out the board all fancy-like
 const char GLYPHS[3][3][3] = {
-    {
-        { ' ', ' ', ' ' },
-        { ' ', ' ', ' ' },
-        { ' ', ' ', ' ' }
-    },
-    {
-        { '#', ' ', '#' },
-        { ' ', '#', ' ' },
-        { '#', ' ', '#' }
-    },
-    {
-        { '#', '#', '#' },
-        { '#', ' ', '#' },
-        { '#', '#', '#' }
-    }
+	{
+		{ '#', ' ', '#' },
+		{ ' ', '#', ' ' },
+		{ '#', ' ', '#' }
+	},
+
+	{
+		{ '#', '#', '#' },
+		{ '#', ' ', '#' },
+		{ '#', '#', '#' }
+	},
+
+{
+	{ ' ', ' ', ' ' },
+	{ ' ', ' ', ' ' },
+	{ ' ', ' ', ' ' }
+},
 };
 
+std::string GetResultString(int boardValue)
+{
+	switch (boardValue)
+	{
+		{
+		case X_VAL:
+			return "X";
+			break;
+		}
+
+		{
+		case O_VAL:
+			return "O";
+			break;
+		}
+
+		{
+		case TIE_VAL:
+			return "T";
+			break;
+		}
+
+	}
+}
 
 void Board::init(int size) {
     // Just cap it at 9 since we have limited console space

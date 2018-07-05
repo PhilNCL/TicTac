@@ -2,14 +2,14 @@
 
 #include <vector>
 
-void AI::init(int aiPlayer) {
-    _aiPlayer = aiPlayer;
-	_humanPlayer = _aiPlayer == X_VAL ? O_VAL : X_VAL;
+AI::AI(int playerIndex) : 
+	Player(playerIndex)
+{
 }
 
 void AI::performMove(Board& board) {
-	AiMove bestMove = getBestMove(board, _aiPlayer);
-	board.setVal(bestMove.x, bestMove.y, _aiPlayer);
+	AiMove bestMove = getBestMove(board, _thisPlayer);
+	board.setVal(bestMove.x, bestMove.y, _thisPlayer);
 }
 
 
@@ -17,11 +17,11 @@ AiMove AI::getBestMove(Board& board, int player, int depth /* = 0*/)
 {
 	int retv = board.checkVictory();
 
-	if (retv == _aiPlayer) // if AI won, return great
+	if (retv == _thisPlayer) // if AI won, return great
 	{
 		return AiMove(10 - depth);
 	}
-	else if (retv == _humanPlayer) // if human won, return low
+	else if (retv == _opposingPlayer) // if human won, return low
 	{
 		return AiMove(depth - 10);
 	}
@@ -48,7 +48,7 @@ AiMove AI::getBestMove(Board& board, int player, int depth /* = 0*/)
 				board.setVal(x, y, player);
 
 				// check if a good move
-				move.score = getBestMove(board, player == _aiPlayer ? _humanPlayer : _aiPlayer, depth).score;
+				move.score = getBestMove(board, player == _thisPlayer ? _opposingPlayer : _thisPlayer, depth).score;
 
 				moves.push_back(move);
 
@@ -59,7 +59,7 @@ AiMove AI::getBestMove(Board& board, int player, int depth /* = 0*/)
 
 	// pick the best move
 	int bestMove = 0;
-	if (player == _aiPlayer)
+	if (player == _thisPlayer)
 	{
 		int bestScore = -1000;
 		for (size_t i = 0; i < moves.size(); i++)

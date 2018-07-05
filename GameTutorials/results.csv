@@ -1,0 +1,43 @@
+X Wins: ,0, O Wins: 0, Draws: 0
+MCTS_UCB1,Minimax,O
+
+MCTS_UCB1,Minimax,O
+
+MCTS_UCB1,Minimax,O
+
+MCTS_UCB1,Minimax,O
+
+MCTS_UCB1,Minimax,O
+
+MCTS_UCB1,Minimax,O
+
+MCTS_UCB1,Minimax,O
+
+MCTS_UCB1,Minimax,O
+
+MCTS_UCB1,Minimax,O
+
+MCTS_UCB1,Minimax,O
+
+X Wins: ,0, O Wins: 9, Draws: 0
+Minimax,MCTS_UCB1,X
+
+Minimax,MCTS_UCB1,X
+
+Minimax,MCTS_UCB1,X
+
+Minimax,MCTS_UCB1,X
+
+Minimax,MCTS_UCB1,X
+
+Minimax,MCTS_UCB1,X
+
+Minimax,MCTS_UCB1,X
+
+Minimax,MCTS_UCB1,X
+
+Minimax,MCTS_UCB1,X
+
+Minimax,MCTS_UCB1,X
+
+X Wins: ,9, O Wins: 0, Draws: 0

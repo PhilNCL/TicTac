@@ -1,27 +1,19 @@
 #pragma once
 
 #include "Board.h"
+#include "Player.h"
 
-struct AiMove
+
+
+class AI : public Player
 {
-	AiMove() {}
-	AiMove(int Score) : score(Score){}
-	int x;
-	int y;
-	int score;
-};
-
-class AI {
 public:
-    // Initializes the AI player
-    void init(int aiPlayer);
-    // Performs the AI move
-    void performMove(Board& board);
+	AI(int playerIndex);
+	// Performs the AI move
+	void performMove(Board& board) override;
+
+	PlayerType getType() override { return PlayerType::MINIMAX; }
 private:
-
 	AiMove getBestMove(Board& board, int player, int depth = 0);
-
-    int _aiPlayer; ///< Index of the AI
-    int _humanPlayer; ///< Index of the player
 };
 

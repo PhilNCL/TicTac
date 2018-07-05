@@ -6,10 +6,11 @@
 
 const int TIE_VAL = -1;
 // Indexes for board values
-const int NO_VAL = 0;
+const int NO_VAL = 2;
 const int X_VAL = 1;
-const int O_VAL = 2;
+const int O_VAL = 0;
 
+std::string GetResultString(int boardValue);
 // NOTE: The const after a function name makes a const function,
 // indicating that the function won't change anything in the class.
 // Const functions CAN NOT call non-const functions of the same class.
