@@ -27,4 +27,6 @@ std::string GetPlayerTypeString(PlayerType type)
 		return "MCTS_UCB1";
 	}
 	}
+
+	return "Unrecognised Player";
 }

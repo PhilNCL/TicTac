@@ -72,6 +72,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MCTSPlayer.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SelectionPolicy.cpp" />
   </ItemGroup>
@@ -82,8 +83,10 @@
     <ClInclude Include="Human.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MCTSPlayer.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SelectionPolicy.h" />
+    <ClInclude Include="WinConstants.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
