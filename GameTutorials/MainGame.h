@@ -18,7 +18,7 @@ public:
 
 	MainGame();
 
-	void doLogging();
+	void doLogging(unsigned int numSamples = 0);
 
 private:
     // Initializes the game
@@ -39,6 +39,6 @@ private:
     bool _isMultiplayer;
 
 	std::vector<GameReport> _reports;
-
+	
 };
 

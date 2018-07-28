@@ -19,7 +19,6 @@ std::string GetResultString(int boardValue);
 // Game board class
 class Board {
 public:
-	Board();
     // Initializes the board
     void init(int size);
     // Clears the board
@@ -52,7 +51,9 @@ public:
     // Getters
     int getSize() const { return _size; }
 	int getLastPlayer() const { return _lastPlayer; }
-	int getScore(int player) const;
+	float getScore(int player) const;
+	int getNumMoves() const { return _numMoves; }
+	void incrementNumMoves()  { ++_numMoves; }
 	bool isFinished() const;
 	std::vector<Board> possibleStates();
 private:
@@ -73,6 +74,6 @@ private:
     std::vector<int> _board;
     int _size;
 	int _lastPlayer;
-	std::mt19937_64 _randomEngine;
+	unsigned int _numMoves = 0;
 };
 

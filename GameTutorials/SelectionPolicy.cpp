@@ -23,7 +23,7 @@ SelectionPolicy::~SelectionPolicy()
 }
 
 
-
+#include <iostream>
 Node*	   SelectionPolicy::getMostPromisingNode(Node* root, int totalVisits, int player)
 {
 	assert(root != nullptr);
@@ -31,7 +31,12 @@ Node*	   SelectionPolicy::getMostPromisingNode(Node* root, int totalVisits, int 
 	{
 		return root;
 	}
-
+	//int i = 0;
+	//std::cout << "Parent::Num Visits: " << root->getNumVisits() << " Tot. Score: " << root->getScore() << " Av. Score: " << root->getAverageScore() << std::endl;
+	//for (auto child : root->getChildren())
+	//{
+	//	std::cout << "Child: " << i++ << " Num Visits: " << child->getNumVisits() << " Tot. Score: " << child->getScore() << " Av. Score: " << child->getAverageScore() << " UCB1 Score: " << this->scoreNode(child, totalVisits, player) << std::endl;
+	//}
 	auto comparator = [totalVisits, player, this](const Node* node_lhs, const Node* node_rhs)
 	{
 		return this->scoreNode(node_lhs, totalVisits, player) < this->scoreNode(node_rhs, totalVisits, player);
@@ -58,7 +63,7 @@ float		   UCB1::scoreNode(const Node* node, int totalVisits, int player)
 	{
 		return  std::numeric_limits<float>::max();
 	}
-
-	return (static_cast<float>(node->getValue(player)) / totalVisits) + 
-			UCB1_CONSTANT * sqrt(log(static_cast<float>(totalVisits)) / node->getNumVisits());
+	 
+	return (node->getAverageScore() + 
+			UCB1_CONSTANT * sqrt(log(static_cast<float>(totalVisits)) / node->getNumVisits()));
 }

@@ -1,8 +1,8 @@
 #include "Board.h"
 
 #include <string>
-#include <ctime>
 
+#include "RandomNumberGenerator.h"
 #include "WinConstants.h"
 
 // Arrays of chars for printing out the board all fancy-like
@@ -51,9 +51,6 @@ std::string GetResultString(int boardValue)
 	}
 }
 
-Board::Board() :
-	_randomEngine(time(0))
-{}
 
 void Board::init(int size) {
     // Just cap it at 9 since we have limited console space
@@ -64,6 +61,7 @@ void Board::init(int size) {
     // Clear it
     clear();
 	_lastPlayer = O_VAL;
+	_numMoves = 0;
 }
 
 void Board::clear() {
@@ -285,12 +283,11 @@ void Board::makeRandomMove(int player)
 		}
 	}
 
-	std::uniform_int_distribution<int> emptySlotIndices(0, emptySlots.size() -1);
-	int randomIndex = emptySlots[emptySlotIndices(_randomEngine)];
+	int randomIndex = emptySlots[getRandomIntInRange(0, emptySlots.size() - 1)];
 	setVal(randomIndex, player);
 }
 
-int Board::getScore(int player) const
+float Board::getScore(int player) const
 {
 	switch (checkVictory())
 	{
@@ -299,163 +296,163 @@ int Board::getScore(int player) const
 	case O_VAL:
 		return (player == O_VAL) ? MAX_WIN : MIN_WIN;
 	case TIE_VAL:
-		return TIE_VAL;
+		return TIE;
 	}
-
-	int score = 0;
-	// Check the rows
-	for (int y = 0; y < _size; y++)
-	{
-		if (countOpponentInRow(player, y) == 0)
-		{
-			switch (countPlayerInRow(player, y))
-			{
-			case 1:
-			{
-				score += SCORE_SINGLE_TOKEN;
-				break;
-			}
-			case 2:
-			{
-				score += SCORE_DOUBLE_TOKEN;
-				break;
-			}
-
-			}
-		}
-		else
-		{
-			switch (countOpponentInRow(player, y))
-			{
-			case 1:
-			{
-				score -= SCORE_SINGLE_TOKEN;
-				break;
-			}
-			case 2:
-			{
-				score -= SCORE_DOUBLE_TOKEN;
-				break;
-			}
-
-			}
-		}
-	}
-
-	// Check the columns
-	for (int y = 0; y < _size; y++)
-	{
-		if (countOpponentInCol(player, y) == 0)
-		{
-			switch (countPlayerInCol(player, y))
-			{
-			case 1:
-			{
-				score += SCORE_SINGLE_TOKEN;
-				break;
-			}
-			case 2:
-			{
-				score += SCORE_DOUBLE_TOKEN;
-				break;
-			}
-
-			}
-		}
-		else
-		{
-			switch (countOpponentInCol(player, y))
-			{
-			case 1:
-			{
-				score -= SCORE_SINGLE_TOKEN;
-				break;
-			}
-			case 2:
-			{
-				score -= SCORE_DOUBLE_TOKEN;
-				break;
-			}
-
-			}
-		}
-	}
-
-	// Check top left diagonal
-	if (countOpponentInForwardDiagonal(player) == 0)
-	{
-		switch (countPlayerInForwardDiagonal(player))
-		{
-		case 1:
-		{
-			score += SCORE_SINGLE_TOKEN;
-			break;
-		}
-		case 2:
-		{
-			score += SCORE_DOUBLE_TOKEN;
-			break;
-		}
-
-		}
-	}
-	else
-	{
-		switch (countOpponentInForwardDiagonal(player))
-		{
-		case 1:
-		{
-			score -= SCORE_SINGLE_TOKEN;
-			break;
-		}
-		case 2:
-		{
-			score -= SCORE_DOUBLE_TOKEN;
-			break;
-		}
-
-		}
-	}
-
-	// Check top right diagonal
-	if (countOpponentInReverseDiagonal(player) == 0)
-	{
-		switch (countPlayerInReverseDiagonal(player))
-		{
-		case 1:
-		{
-			score += SCORE_SINGLE_TOKEN;
-			break;
-		}
-		case 2:
-		{
-			score += SCORE_DOUBLE_TOKEN;
-			break;
-		}
-
-		}
-	}
-	else
-	{
-		switch (countOpponentInReverseDiagonal(player))
-		{
-		case 1:
-		{
-			score -= SCORE_SINGLE_TOKEN;
-			break;
-		}
-		case 2:
-		{
-			score -= SCORE_DOUBLE_TOKEN;
-			break;
-		}
-
-		}
-	}
-
-	score += (_lastPlayer == player) ? 0 : SCORE_TURN_ADVANTAGE;
-
 	return 0;
+	//int score = 0;
+	//// Check the rows
+	//for (int y = 0; y < _size; y++)
+	//{
+	//	if (countOpponentInRow(player, y) == 0)
+	//	{
+	//		switch (countPlayerInRow(player, y))
+	//		{
+	//		case 1:
+	//		{
+	//			score += SCORE_SINGLE_TOKEN;
+	//			break;
+	//		}
+	//		case 2:
+	//		{
+	//			score += SCORE_DOUBLE_TOKEN;
+	//			break;
+	//		}
+
+	//		}
+	//	}
+	//	else
+	//	{
+	//		switch (countOpponentInRow(player, y))
+	//		{
+	//		case 1:
+	//		{
+	//			score -= SCORE_SINGLE_TOKEN;
+	//			break;
+	//		}
+	//		case 2:
+	//		{
+	//			score -= SCORE_DOUBLE_TOKEN;
+	//			break;
+	//		}
+
+	//		}
+	//	}
+	//}
+
+	//// Check the columns
+	//for (int y = 0; y < _size; y++)
+	//{
+	//	if (countOpponentInCol(player, y) == 0)
+	//	{
+	//		switch (countPlayerInCol(player, y))
+	//		{
+	//		case 1:
+	//		{
+	//			score += SCORE_SINGLE_TOKEN;
+	//			break;
+	//		}
+	//		case 2:
+	//		{
+	//			score += SCORE_DOUBLE_TOKEN;
+	//			break;
+	//		}
+
+	//		}
+	//	}
+	//	else
+	//	{
+	//		switch (countOpponentInCol(player, y))
+	//		{
+	//		case 1:
+	//		{
+	//			score -= SCORE_SINGLE_TOKEN;
+	//			break;
+	//		}
+	//		case 2:
+	//		{
+	//			score -= SCORE_DOUBLE_TOKEN;
+	//			break;
+	//		}
+
+	//		}
+	//	}
+	//}
+
+	//// Check top left diagonal
+	//if (countOpponentInForwardDiagonal(player) == 0)
+	//{
+	//	switch (countPlayerInForwardDiagonal(player))
+	//	{
+	//	case 1:
+	//	{
+	//		score += SCORE_SINGLE_TOKEN;
+	//		break;
+	//	}
+	//	case 2:
+	//	{
+	//		score += SCORE_DOUBLE_TOKEN;
+	//		break;
+	//	}
+
+	//	}
+	//}
+	//else
+	//{
+	//	switch (countOpponentInForwardDiagonal(player))
+	//	{
+	//	case 1:
+	//	{
+	//		score -= SCORE_SINGLE_TOKEN;
+	//		break;
+	//	}
+	//	case 2:
+	//	{
+	//		score -= SCORE_DOUBLE_TOKEN;
+	//		break;
+	//	}
+
+	//	}
+	//}
+
+	//// Check top right diagonal
+	//if (countOpponentInReverseDiagonal(player) == 0)
+	//{
+	//	switch (countPlayerInReverseDiagonal(player))
+	//	{
+	//	case 1:
+	//	{
+	//		score += SCORE_SINGLE_TOKEN;
+	//		break;
+	//	}
+	//	case 2:
+	//	{
+	//		score += SCORE_DOUBLE_TOKEN;
+	//		break;
+	//	}
+
+	//	}
+	//}
+	//else
+	//{
+	//	switch (countOpponentInReverseDiagonal(player))
+	//	{
+	//	case 1:
+	//	{
+	//		score -= SCORE_SINGLE_TOKEN;
+	//		break;
+	//	}
+	//	case 2:
+	//	{
+	//		score -= SCORE_DOUBLE_TOKEN;
+	//		break;
+	//	}
+
+	//	}
+	//}
+
+	//score += (_lastPlayer == player) ? 0 : SCORE_TURN_ADVANTAGE;
+
+	//return score;
 }
 
 
@@ -483,7 +480,7 @@ unsigned int Board::countPlayerInRow(int player, unsigned int row) const
 	{
 		if (getVal(row, y) == player)
 		{
-			++player;
+			++numPlayer;
 		}
 	}
 	return numPlayer;
@@ -501,7 +498,7 @@ unsigned int Board::countPlayerInCol(int player, unsigned int col) const
 	{
 		if (getVal(y, col) == player)
 		{
-			++player;
+			++numPlayer;
 		}
 	}
 	return numPlayer;

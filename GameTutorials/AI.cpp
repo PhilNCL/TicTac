@@ -10,6 +10,7 @@ AI::AI(int playerIndex) :
 void AI::performMove(Board& board) {
 	AiMove bestMove = getBestMove(board, _thisPlayer);
 	board.setVal(bestMove.x, bestMove.y, _thisPlayer);
+	board.incrementNumMoves();
 }
 
 

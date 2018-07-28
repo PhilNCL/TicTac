@@ -74,6 +74,7 @@
     <ClCompile Include="MCTSPlayer.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RandomNumberGenerator.cpp" />
     <ClCompile Include="SelectionPolicy.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +86,7 @@
     <ClInclude Include="MCTSPlayer.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RandomNumberGenerator.h" />
     <ClInclude Include="SelectionPolicy.h" />
     <ClInclude Include="WinConstants.h" />
   </ItemGroup>
