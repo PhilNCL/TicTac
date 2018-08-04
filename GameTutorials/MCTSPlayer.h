@@ -24,10 +24,6 @@ public:
 	PlayerType getType() override;
 private:
 	std::unique_ptr<SelectionPolicy> _selectionPolicy;
-	int performRollout(Node* node);
-	void expandNode(Node* node);
-	void backPropagate(Node* node, int score);
-	Node* bestChildNode(Node* node);
 
 	const unsigned int NUM_SAMPLES;
 	const unsigned int ROLLOUT_DEPTH;

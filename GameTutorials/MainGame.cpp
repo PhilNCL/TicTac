@@ -3,22 +3,24 @@
 #include <fstream>
 
 #include "MCTSPlayer.h"
+#include "EpsilonGreedy.h"
 
 #include <random>
 void MainGame::run() {
 
-	for (int num_samples = 7; num_samples <= 500;  num_samples += 5)
+	for (int num_samples = 2; num_samples <= 3002;  num_samples += 100)
 	{
 		init();
 		// Game loop
-		_players[X_VAL] = std::make_unique<MCTSPlayer>(X_VAL, 2);
-		_players[O_VAL] = std::make_unique<MCTSPlayer>(O_VAL, 2);
-		const int NUM_GAMES = 1000;
+		_players[X_VAL] = std::make_unique<MCTSPlayer>(X_VAL, num_samples);
+		_players[O_VAL] = std::make_unique<AI>(O_VAL);
+		const int NUM_GAMES = 100;
 		for (int game = 0; game < NUM_GAMES; ++game)
 		{
 			int rv = NO_VAL;
 			while (rv == NO_VAL)
 			{
+				
 				//_board.print();
 				_players[_currentPlayer]->performMove(_board);
 				changePlayer();
@@ -28,8 +30,8 @@ void MainGame::run() {
 
 		}
 		init();
-		_players[X_VAL] = std::make_unique<MCTSPlayer>(X_VAL, num_samples);
-		_players[O_VAL] = std::make_unique<AI>(O_VAL);
+		_players[O_VAL] = std::make_unique<MCTSPlayer>(X_VAL, num_samples);
+		_players[X_VAL] = std::make_unique<AI>(O_VAL);
 		for (int game = 0; game < NUM_GAMES; ++game)
 		{
 			int rv = NO_VAL;

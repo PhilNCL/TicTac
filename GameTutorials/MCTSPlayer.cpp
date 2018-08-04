@@ -8,17 +8,13 @@ const int DEFAULT_ROLLOUT_DEPTH = 9;
 #include "Node.h"
 #include "SelectionPolicy.h"
 
-int togglePlayer(const Board& board)
-{
-	return (board.getLastPlayer() == X_VAL) ? O_VAL : X_VAL;
-}
 
 MCTSPlayer::MCTSPlayer(int playerIndex) :
 	Player(playerIndex),
 	NUM_SAMPLES(DEFAULT_NUM_SAMPLES),
 	ROLLOUT_DEPTH(DEFAULT_ROLLOUT_DEPTH)
 {
-	_selectionPolicy = std::make_unique<UCB1>();
+	_selectionPolicy = std::make_unique<UCB1>(playerIndex);
 }
 
 MCTSPlayer::MCTSPlayer(int playerIndex, unsigned int numSamples) :
@@ -26,7 +22,7 @@ MCTSPlayer::MCTSPlayer(int playerIndex, unsigned int numSamples) :
 	NUM_SAMPLES(numSamples),
 	ROLLOUT_DEPTH(DEFAULT_ROLLOUT_DEPTH)
 {
-	_selectionPolicy = std::make_unique<UCB1>();
+	_selectionPolicy = std::make_unique<UCB1>(playerIndex);
 }
 
 MCTSPlayer::MCTSPlayer(int playerIndex, unsigned int numSamples, unsigned int rolloutDepth) : 
@@ -34,7 +30,7 @@ MCTSPlayer::MCTSPlayer(int playerIndex, unsigned int numSamples, unsigned int ro
 	NUM_SAMPLES(numSamples),
 	ROLLOUT_DEPTH(rolloutDepth)
 {
-	_selectionPolicy = std::make_unique<UCB1>();
+	_selectionPolicy = std::make_unique<UCB1>(playerIndex);
 }
 
 MCTSPlayer::~MCTSPlayer()
@@ -58,7 +54,7 @@ void MCTSPlayer::performMove(Board& board)
 			}
 		}
 
-		int score = performRollout(promisingNode);
+		float score = performRollout(promisingNode, _thisPlayer, ROLLOUT_DEPTH);
 		backPropagate(promisingNode, score);
 	}
 
@@ -95,58 +91,6 @@ PlayerType MCTSPlayer::getType()
 	{
 		return PlayerType::NONE;
 	}
-	}
-}
-
-int MCTSPlayer::performRollout(Node* node)
-{
-	Board tempBoard = node->getState();
-
-	for (int depth = 0; depth < ROLLOUT_DEPTH; ++depth)
-	{
-		if (tempBoard.isFinished()) 
-		{
-			return tempBoard.getScore(_thisPlayer);
-		}
-
-		int currentPlayer = togglePlayer(tempBoard);
-		tempBoard.makeRandomMove(currentPlayer);
-	}
-	return tempBoard.getScore(_thisPlayer);
-}
-
-
-void MCTSPlayer::expandNode(Node* node)
-{
-	node->addAllPossibleChildStates();
-}
-
-void MCTSPlayer::backPropagate(Node* node, int score)
-{
-	Node* currentNode = node;
-	while (currentNode)
-	{
-		currentNode->incrementNumVisits();
-		currentNode->incrementScore(score);
-		currentNode = currentNode->getParent();
-	}
-}
-
-Node* MCTSPlayer::bestChildNode(Node* node)
-{
-	assert(node != nullptr);
-	auto iter = std::max_element(node->getChildren().begin(), node->getChildren().end(), [](const Node* lhs, const Node* rhs)
-	{
-		return lhs->getAverageScore() < rhs->getAverageScore();
-	});
-
-	if (iter != node->getChildren().end())
-	{
-		return *iter;
-	}
-	else
-	{
-		return nullptr;
 	}
 }
 

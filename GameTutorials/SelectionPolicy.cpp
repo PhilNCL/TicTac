@@ -12,7 +12,8 @@ const float UCB1_CONSTANT = sqrt(2.0f);
 
 using CHILD_ITER = std::vector<Node*>::const_iterator;
 
-SelectionPolicy::SelectionPolicy()
+SelectionPolicy::SelectionPolicy(int playerIndex) : 
+	_playerIndex(playerIndex)
 {
 
 }
@@ -52,6 +53,12 @@ Node*	   SelectionPolicy::getMostPromisingNode(Node* root, int totalVisits, int 
 	return getMostPromisingNode(*best_child, totalVisits, player);
 }
 
+
+UCB1::UCB1(int playerIndex) :
+	SelectionPolicy(playerIndex)
+{}
+
+
 float		   UCB1::scoreNode(const Node* node, int totalVisits, int player)
 {
 	if (!node)
@@ -63,7 +70,38 @@ float		   UCB1::scoreNode(const Node* node, int totalVisits, int player)
 	{
 		return  std::numeric_limits<float>::max();
 	}
-	 
-	return (node->getAverageScore() + 
+	if (player == _playerIndex)
+	{
+		return (static_cast<float>(node->getValue(player)) / totalVisits +
 			UCB1_CONSTANT * sqrt(log(static_cast<float>(totalVisits)) / node->getNumVisits()));
+	}
+	else
+	{
+		return (static_cast<float>(-node->getValue(player)) / totalVisits +
+			UCB1_CONSTANT * sqrt(log(static_cast<float>(totalVisits)) / node->getNumVisits()));
+	}
+
 }
+
+Greedy::Greedy(int playerIndex) :
+	SelectionPolicy(playerIndex)
+{
+}
+
+float	 Greedy::scoreNode(const Node* node, int /*totalVisits*/, int player)
+{
+	if (!node)
+	{
+		return 0;
+	}
+
+	if (_playerIndex == player)
+	{
+		return static_cast<float>(node->getValue(player));
+	}
+	else
+	{
+		return static_cast<float>(-node->getValue(player));
+	}
+}
+

@@ -9,6 +9,7 @@ enum class PlayerType : unsigned
 	HUMAN,
 	MINIMAX,
 	MCTS_UCB1,
+	EPSILON_GREEDY,
 	NONE
 };
 

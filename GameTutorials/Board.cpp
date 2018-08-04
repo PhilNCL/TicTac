@@ -298,161 +298,161 @@ float Board::getScore(int player) const
 	case TIE_VAL:
 		return TIE;
 	}
-	return 0;
-	//int score = 0;
-	//// Check the rows
-	//for (int y = 0; y < _size; y++)
-	//{
-	//	if (countOpponentInRow(player, y) == 0)
-	//	{
-	//		switch (countPlayerInRow(player, y))
-	//		{
-	//		case 1:
-	//		{
-	//			score += SCORE_SINGLE_TOKEN;
-	//			break;
-	//		}
-	//		case 2:
-	//		{
-	//			score += SCORE_DOUBLE_TOKEN;
-	//			break;
-	//		}
 
-	//		}
-	//	}
-	//	else
-	//	{
-	//		switch (countOpponentInRow(player, y))
-	//		{
-	//		case 1:
-	//		{
-	//			score -= SCORE_SINGLE_TOKEN;
-	//			break;
-	//		}
-	//		case 2:
-	//		{
-	//			score -= SCORE_DOUBLE_TOKEN;
-	//			break;
-	//		}
+	int score = 0;
+	// Check the rows
+	for (int y = 0; y < _size; y++)
+	{
+		if (countOpponentInRow(player, y) == 0)
+		{
+			switch (countPlayerInRow(player, y))
+			{
+			case 1:
+			{
+				score += SCORE_SINGLE_TOKEN;
+				break;
+			}
+			case 2:
+			{
+				score += SCORE_DOUBLE_TOKEN;
+				break;
+			}
 
-	//		}
-	//	}
-	//}
+			}
+		}
+		else
+		{
+			switch (countOpponentInRow(player, y))
+			{
+			case 1:
+			{
+				score -= SCORE_SINGLE_TOKEN;
+				break;
+			}
+			case 2:
+			{
+				score -= SCORE_DOUBLE_TOKEN;
+				break;
+			}
 
-	//// Check the columns
-	//for (int y = 0; y < _size; y++)
-	//{
-	//	if (countOpponentInCol(player, y) == 0)
-	//	{
-	//		switch (countPlayerInCol(player, y))
-	//		{
-	//		case 1:
-	//		{
-	//			score += SCORE_SINGLE_TOKEN;
-	//			break;
-	//		}
-	//		case 2:
-	//		{
-	//			score += SCORE_DOUBLE_TOKEN;
-	//			break;
-	//		}
+			}
+		}
+	}
 
-	//		}
-	//	}
-	//	else
-	//	{
-	//		switch (countOpponentInCol(player, y))
-	//		{
-	//		case 1:
-	//		{
-	//			score -= SCORE_SINGLE_TOKEN;
-	//			break;
-	//		}
-	//		case 2:
-	//		{
-	//			score -= SCORE_DOUBLE_TOKEN;
-	//			break;
-	//		}
+	// Check the columns
+	for (int y = 0; y < _size; y++)
+	{
+		if (countOpponentInCol(player, y) == 0)
+		{
+			switch (countPlayerInCol(player, y))
+			{
+			case 1:
+			{
+				score += SCORE_SINGLE_TOKEN;
+				break;
+			}
+			case 2:
+			{
+				score += SCORE_DOUBLE_TOKEN;
+				break;
+			}
 
-	//		}
-	//	}
-	//}
+			}
+		}
+		else
+		{
+			switch (countOpponentInCol(player, y))
+			{
+			case 1:
+			{
+				score -= SCORE_SINGLE_TOKEN;
+				break;
+			}
+			case 2:
+			{
+				score -= SCORE_DOUBLE_TOKEN;
+				break;
+			}
 
-	//// Check top left diagonal
-	//if (countOpponentInForwardDiagonal(player) == 0)
-	//{
-	//	switch (countPlayerInForwardDiagonal(player))
-	//	{
-	//	case 1:
-	//	{
-	//		score += SCORE_SINGLE_TOKEN;
-	//		break;
-	//	}
-	//	case 2:
-	//	{
-	//		score += SCORE_DOUBLE_TOKEN;
-	//		break;
-	//	}
+			}
+		}
+	}
 
-	//	}
-	//}
-	//else
-	//{
-	//	switch (countOpponentInForwardDiagonal(player))
-	//	{
-	//	case 1:
-	//	{
-	//		score -= SCORE_SINGLE_TOKEN;
-	//		break;
-	//	}
-	//	case 2:
-	//	{
-	//		score -= SCORE_DOUBLE_TOKEN;
-	//		break;
-	//	}
+	// Check top left diagonal
+	if (countOpponentInForwardDiagonal(player) == 0)
+	{
+		switch (countPlayerInForwardDiagonal(player))
+		{
+		case 1:
+		{
+			score += SCORE_SINGLE_TOKEN;
+			break;
+		}
+		case 2:
+		{
+			score += SCORE_DOUBLE_TOKEN;
+			break;
+		}
 
-	//	}
-	//}
+		}
+	}
+	else
+	{
+		switch (countOpponentInForwardDiagonal(player))
+		{
+		case 1:
+		{
+			score -= SCORE_SINGLE_TOKEN;
+			break;
+		}
+		case 2:
+		{
+			score -= SCORE_DOUBLE_TOKEN;
+			break;
+		}
 
-	//// Check top right diagonal
-	//if (countOpponentInReverseDiagonal(player) == 0)
-	//{
-	//	switch (countPlayerInReverseDiagonal(player))
-	//	{
-	//	case 1:
-	//	{
-	//		score += SCORE_SINGLE_TOKEN;
-	//		break;
-	//	}
-	//	case 2:
-	//	{
-	//		score += SCORE_DOUBLE_TOKEN;
-	//		break;
-	//	}
+		}
+	}
 
-	//	}
-	//}
-	//else
-	//{
-	//	switch (countOpponentInReverseDiagonal(player))
-	//	{
-	//	case 1:
-	//	{
-	//		score -= SCORE_SINGLE_TOKEN;
-	//		break;
-	//	}
-	//	case 2:
-	//	{
-	//		score -= SCORE_DOUBLE_TOKEN;
-	//		break;
-	//	}
+	// Check top right diagonal
+	if (countOpponentInReverseDiagonal(player) == 0)
+	{
+		switch (countPlayerInReverseDiagonal(player))
+		{
+		case 1:
+		{
+			score += SCORE_SINGLE_TOKEN;
+			break;
+		}
+		case 2:
+		{
+			score += SCORE_DOUBLE_TOKEN;
+			break;
+		}
 
-	//	}
-	//}
+		}
+	}
+	else
+	{
+		switch (countOpponentInReverseDiagonal(player))
+		{
+		case 1:
+		{
+			score -= SCORE_SINGLE_TOKEN;
+			break;
+		}
+		case 2:
+		{
+			score -= SCORE_DOUBLE_TOKEN;
+			break;
+		}
 
-	//score += (_lastPlayer == player) ? 0 : SCORE_TURN_ADVANTAGE;
+		}
+	}
 
-	//return score;
+	score += (_lastPlayer == player) ? 0 : SCORE_TURN_ADVANTAGE;
+
+	return score;
 }
 
 

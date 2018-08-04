@@ -2,6 +2,61 @@
 #include "Node.h"
 
 #include <algorithm>
+#include <cassert>
+
+void expandNode(Node* node)
+{
+	node->addAllPossibleChildStates();
+}
+
+void backPropagate(Node* node, float score)
+{
+	Node* currentNode = node;
+	while (currentNode)
+	{
+		currentNode->incrementNumVisits();
+		currentNode->incrementScore(score);
+		currentNode = currentNode->getParent();
+	}
+}
+
+
+float performRollout(Node* node, int player, unsigned int ROLLOUT_DEPTH)
+{
+	Board tempBoard = node->getState();
+
+	for (int depth = 0; depth < ROLLOUT_DEPTH; ++depth)
+	{
+		if (tempBoard.isFinished())
+		{
+			return tempBoard.getScore(player);
+		}
+
+		int currentPlayer = togglePlayer(tempBoard);
+		tempBoard.makeRandomMove(currentPlayer);
+	}
+	return tempBoard.getScore(player);
+}
+
+
+Node* bestChildNode(Node* node)
+{
+	assert(node != nullptr);
+	auto iter = std::max_element(node->getChildren().begin(), node->getChildren().end(), [](const Node* lhs, const Node* rhs)
+	{
+		return lhs->getAverageScore() < rhs->getAverageScore();
+	});
+
+	if (iter != node->getChildren().end())
+	{
+		return *iter;
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
 
 Node::Node(Board board_state) :
 	_state(board_state)

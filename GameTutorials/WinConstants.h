@@ -6,7 +6,7 @@
 //const float MIN_POSITIVE = -MAX_POSITIVE;
 //const float TIE = 0;
 
-const float MAX_WIN = 0.0f;
+const float MAX_WIN = 1.0f;
 const float MIN_WIN = -1.0f;
 const float MAX_POSITIVE = MAX_WIN / 2;
 const float MIN_POSITIVE = -MAX_POSITIVE;

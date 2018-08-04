@@ -77,3 +77,7 @@ private:
 	unsigned int _numMoves = 0;
 };
 
+inline int togglePlayer(const Board& board)
+{
+	return (board.getLastPlayer() == X_VAL) ? O_VAL : X_VAL;
+}

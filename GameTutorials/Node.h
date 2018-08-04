@@ -6,6 +6,11 @@
 
 class Node;
 
+void expandNode(Node* node);
+void backPropagate(Node* node, float score);
+float performRollout(Node* node, int player, unsigned int ROLLOUT_DEPTH);
+Node* bestChildNode(Node* node);
+
 class Node
 {
 public:
