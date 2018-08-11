@@ -26,6 +26,18 @@ std::string GetPlayerTypeString(PlayerType type)
 	{
 		return "MCTS_UCB1";
 	}
+	case PlayerType::EPSILON_GREEDY:
+	{
+		return "Epsilon";
+	}
+	case PlayerType::BOLTZMANN:
+	{
+		return "Boltzmann";
+	}
+	case PlayerType::RANDOM:
+	{
+		return "Random";
+	}
 	}
 
 	return "Unrecognised Player";

@@ -10,6 +10,8 @@ enum class PlayerType : unsigned
 	MINIMAX,
 	MCTS_UCB1,
 	EPSILON_GREEDY,
+	BOLTZMANN,
+	RANDOM,
 	NONE
 };
 

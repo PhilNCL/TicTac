@@ -8,7 +8,7 @@
 #include <cmath>
 #include <vector>
 
-const float UCB1_CONSTANT = sqrt(2.0f);
+const float DEFAULT_UCB1_CONSTANT = sqrt(2.0f);
 
 using CHILD_ITER = std::vector<Node*>::const_iterator;
 
@@ -17,6 +17,8 @@ SelectionPolicy::SelectionPolicy(int playerIndex) :
 {
 
 }
+
+
 
 
 SelectionPolicy::~SelectionPolicy()
@@ -51,12 +53,20 @@ Node*	   SelectionPolicy::getMostPromisingNode(Node* root, int totalVisits, int 
 
 	assert(best_child != children_end);
 	return getMostPromisingNode(*best_child, totalVisits, player);
+	//return *best_child;
 }
 
 
 UCB1::UCB1(int playerIndex) :
-	SelectionPolicy(playerIndex)
+	SelectionPolicy(playerIndex),
+	EXPLORATION_CONSTANT(DEFAULT_UCB1_CONSTANT)
 {}
+
+UCB1::UCB1(int playerIndex, float explorationConstant) :
+	SelectionPolicy(playerIndex),
+	EXPLORATION_CONSTANT(explorationConstant)
+{
+}
 
 
 float		   UCB1::scoreNode(const Node* node, int totalVisits, int player)
@@ -70,18 +80,12 @@ float		   UCB1::scoreNode(const Node* node, int totalVisits, int player)
 	{
 		return  std::numeric_limits<float>::max();
 	}
-	if (player == _playerIndex)
-	{
-		return (static_cast<float>(node->getValue(player)) / totalVisits +
-			UCB1_CONSTANT * sqrt(log(static_cast<float>(totalVisits)) / node->getNumVisits()));
-	}
-	else
-	{
-		return (static_cast<float>(-node->getValue(player)) / totalVisits +
-			UCB1_CONSTANT * sqrt(log(static_cast<float>(totalVisits)) / node->getNumVisits()));
-	}
+	return (node->getAverageScore() +
+		EXPLORATION_CONSTANT * sqrt(log(static_cast<float>(totalVisits)) / node->getNumVisits()));
 
 }
+
+
 
 Greedy::Greedy(int playerIndex) :
 	SelectionPolicy(playerIndex)

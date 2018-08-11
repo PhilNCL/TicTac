@@ -80,7 +80,14 @@ int	Node::getValue(int player) const
 
 float	Node::getAverageScore() const
 {
-	return static_cast<float>(_score) / _visits;
+	if (_visits)
+	{
+		return static_cast<float>(_score) / _visits;
+	}
+	else
+	{
+		return 0.0f;
+	}
 }
 
 void Node::addAllPossibleChildStates()

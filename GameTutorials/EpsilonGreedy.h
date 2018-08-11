@@ -2,6 +2,8 @@
 
 #include "Player.h"
 
+class Node;
+
 class EpsilonGreedyPlayer : public Player
 {
 public:
@@ -13,7 +15,7 @@ public:
 	PlayerType getType() override;
 
 private:
-
+	Node* getMostPromisingNode(Node* root);
 
 	const float EPSILON;
 	const unsigned int NUM_SAMPLES;

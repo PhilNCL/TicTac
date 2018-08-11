@@ -4,12 +4,14 @@
 #include "Board.h"
 #include "GameReport.h"
 
+#include <array>
 #include <vector>
 #include <memory>
+#include <map>
 
 enum class GameState { PLAYING, EXIT };
 
-class Player;
+#include "Player.h"
 
 class MainGame {
 public:
@@ -19,11 +21,11 @@ public:
 	MainGame();
 
 	void doLogging(unsigned int numSamples = 0);
-
+	void logComparison();
 private:
     // Initializes the game
     void init();
-
+	void init(int size);
     // Changes players
     void changePlayer();
     // Ends a game and prompts for quit or re-try
@@ -39,6 +41,7 @@ private:
     bool _isMultiplayer;
 
 	std::vector<GameReport> _reports;
-	
+
+	std::map<std::pair<PlayerType, PlayerType>, std::array<unsigned, 3>> _playerComparisonResults;
 };
 

@@ -17,6 +17,7 @@ public:
 	MCTSPlayer(int playerIndex);
 	MCTSPlayer(int playerIndex, unsigned int numSamples);
 	MCTSPlayer(int playerIndex, unsigned int numSamples, unsigned int rolloutDepth);
+	MCTSPlayer(int playerIndex, unsigned int numSamples, float explorationConstant);
 	~MCTSPlayer();
 	// Performs the AI move
 	void performMove(Board& board) override;

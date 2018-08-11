@@ -25,29 +25,21 @@ void EpsilonGreedyPlayer::performMove(Board& board)
 	const int numChildren = rootNode.getChildren().size();
 	assert(numChildren != 0);
 
-	Node* chosenMove;
+	Node* chosenMove = nullptr;
 
 	for (int sample = 0; sample < NUM_SAMPLES; ++sample)
 	{
 		chosenMove = nullptr;
 	
-		float randomRoll = getProbability();
-		if (randomRoll < EPSILON)
-		{
-			// Pick a random child
-			int randomIndex = getRandomIntInRange(0, numChildren - 1);
-			chosenMove = rootNode.getChildren().at(randomIndex);
-		}
-		else
-		{
-			// Pick best child
-			auto iter = std::max_element(rootNode.getChildren().begin(), rootNode.getChildren().end(), [this](const Node* lhs, const Node* rhs)
-			{
-				return lhs->getValue(_thisPlayer) < rhs->getValue(_thisPlayer);
-			});
+		chosenMove = getMostPromisingNode(&rootNode);
 
-			assert(iter != rootNode.getChildren().end());
-			chosenMove = *iter;
+		if (chosenMove->getNumVisits() != 0)
+		{
+			expandNode(chosenMove);
+			if (!chosenMove->getChildren().empty())
+			{
+				chosenMove = chosenMove->getChildren().front();
+			}
 		}
 
 		float score = performRollout(chosenMove, _thisPlayer, ROLLOUT_DEPTH);
@@ -55,7 +47,11 @@ void EpsilonGreedyPlayer::performMove(Board& board)
 	}
 	//std::cout << "*********" << std::endl;
 	//board.print();
-	board = chosenMove->getState();
+	assert(chosenMove != nullptr);
+	Node* bestMove = bestChildNode(&rootNode);
+	//std::cout << "*********" << std::endl;
+	//board.print();
+	board = bestMove->getState();
 	//board.print();
 	//std::cout << "*********" << std::endl;
 	board.incrementNumMoves();
@@ -65,4 +61,35 @@ void EpsilonGreedyPlayer::performMove(Board& board)
 PlayerType EpsilonGreedyPlayer::getType()
 {
 	return PlayerType::EPSILON_GREEDY;
+}
+
+Node* EpsilonGreedyPlayer::getMostPromisingNode(Node* root)
+{
+	assert(root != nullptr);
+
+	if (root->getChildren().empty())
+	{
+		return root;
+	}
+
+	float randomRoll = getProbability();
+	int numChildren = root->getChildren().size();
+	if (randomRoll < EPSILON)
+	{
+		// Pick a random child
+		int randomIndex = getRandomIntInRange(0, numChildren - 1);
+		return root->getChildren().at(randomIndex);
+		//return getMostPromisingNode(root->getChildren().at(randomIndex));
+	}
+	else
+	{
+		// Pick best child
+		auto iter = std::max_element(root->getChildren().begin(), root->getChildren().end(), [this](const Node* lhs, const Node* rhs)
+		{
+			return lhs->getAverageScore() < rhs->getAverageScore();
+		});
+
+		assert(iter != root->getChildren().end());
+		return getMostPromisingNode(*iter);
+	}
 }

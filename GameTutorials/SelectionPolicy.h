@@ -26,8 +26,11 @@ class UCB1 : public SelectionPolicy
 {
 public:
 	UCB1(int playerIndex);
+	UCB1(int playerIndex, float explorationConstant);
 	float		scoreNode(const Node* node, int totalVisits, int player) override;
 	PolicyType getType() override { return PolicyType::UCB1; }
+private:
+	const float EXPLORATION_CONSTANT;
 };
 
 class Greedy : public SelectionPolicy

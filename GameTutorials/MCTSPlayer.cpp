@@ -33,6 +33,14 @@ MCTSPlayer::MCTSPlayer(int playerIndex, unsigned int numSamples, unsigned int ro
 	_selectionPolicy = std::make_unique<UCB1>(playerIndex);
 }
 
+MCTSPlayer::MCTSPlayer(int playerIndex, unsigned int numSamples, float explorationConstant):
+	Player(playerIndex),
+	NUM_SAMPLES(numSamples),
+	ROLLOUT_DEPTH(DEFAULT_ROLLOUT_DEPTH)
+{
+	_selectionPolicy = std::make_unique<UCB1>(playerIndex, explorationConstant);
+}
+
 MCTSPlayer::~MCTSPlayer()
 {
 }

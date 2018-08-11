@@ -67,6 +67,7 @@
   <ItemGroup>
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="BoltzmannPlayer.cpp" />
     <ClCompile Include="EpsilonGreedy.cpp" />
     <ClCompile Include="GameReport.cpp" />
     <ClCompile Include="Human.cpp" />
@@ -76,11 +77,13 @@
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RandomNumberGenerator.cpp" />
+    <ClCompile Include="RandomPlayer.cpp" />
     <ClCompile Include="SelectionPolicy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AI.h" />
     <ClInclude Include="Board.h" />
+    <ClInclude Include="BoltzmannPlayer.h" />
     <ClInclude Include="EpsilonGreedy.h" />
     <ClInclude Include="GameReport.h" />
     <ClInclude Include="Human.h" />
@@ -89,6 +92,7 @@
     <ClInclude Include="Node.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RandomNumberGenerator.h" />
+    <ClInclude Include="RandomPlayer.h" />
     <ClInclude Include="SelectionPolicy.h" />
     <ClInclude Include="WinConstants.h" />
   </ItemGroup>
